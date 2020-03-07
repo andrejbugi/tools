@@ -23,4 +23,8 @@ RSpec.describe Tools::Luhn do
     luhn_example = Tools::Luhn.new('09983')
     expect(luhn_example.reversed).to eq(luhn_example.calc_str)
   end
+  it 'has valid digits' do
+    luhn_example = Tools::Luhn.new('09953')
+    expect(luhn_example.calc_str).to eq(10)
+  end
 end
