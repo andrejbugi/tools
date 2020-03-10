@@ -16,15 +16,6 @@ RSpec.describe Tools::Luhn do
 
   it 'remains valid if digits reversed' do
     luhn_example = Tools::Luhn.new('059')
-    expect(luhn_example.reversed).to eq(luhn_example.calc_str)
-  end
-
-  it 'remains valid if digits reversed' do
-    luhn_example = Tools::Luhn.new('09983')
-    expect(luhn_example.reversed).to eq(luhn_example.calc_str)
-  end
-  it 'has valid digits' do
-    luhn_example = Tools::Luhn.new('09953')
-    expect(luhn_example.calc_str).to eq(10)
+    expect(luhn_example.valid?).to be true
   end
 end
