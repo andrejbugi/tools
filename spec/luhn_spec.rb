@@ -18,4 +18,19 @@ RSpec.describe Tools::Luhn do
     luhn_example = Tools::Luhn.new('059')
     expect(luhn_example.valid?).to be true
   end
+
+  it 'becomes invalid if digits reversed' do
+    luhn_example = Tools::Luhn.new('59')
+    expect(luhn_example.valid?).to be true
+  end
+
+  it 'is valid canadian sin num' do
+    luhn_example = Tools::Luhn.new('055 444 285')
+    expect(luhn_example.valid?).to be true
+  end
+
+  it 'is invalid canadian sin num' do
+    luhn_example = Tools::Luhn.new('055 444 286')
+    expect(luhn_example.valid?).to be false
+  end
 end
