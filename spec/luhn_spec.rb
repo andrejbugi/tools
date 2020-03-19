@@ -78,4 +78,19 @@ RSpec.describe Tools::Luhn do
     luhn_example = Tools::Luhn.new('091')
     expect(luhn_example.valid?).to be true
   end
+
+  it 'tells in raindrop-speak the factor of the number' do
+    raindrop_ex = Tools::Raindrop.new(18)
+    expect(raindrop_ex.num_factor).to eq('Pling')
+  end
+
+  it 'tells in raindrop-speak the factor of the number' do
+    raindrop_ex = Tools::Raindrop.new(35)
+    expect(raindrop_ex.num_factor).to eq('PlangPlong')
+  end
+
+  it 'returns the same number in string' do
+    raindrop_ex = Tools::Raindrop.new(8)
+    expect(raindrop_ex.num_factor).to eq('8')
+  end
 end
