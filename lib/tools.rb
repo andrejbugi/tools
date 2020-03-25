@@ -3,13 +3,13 @@ require "tools/version"
 module Tools
   class Luhn
     def initialize(str)
-      @str = str
+      @stripped = str.delete(' ')
     end
 
     def valid?
-      return false if @str.length < 2
-      return false if divide_by_10? % 10 != 0
-      return false if @stripped.scan(/\D/).any? || @reversed_array.length < 2
+      return false if @stripped.length < 2
+      return false if @stripped.scan(/\D/).any?
+      return false if checksum % 10 != 0
 
       true
 
@@ -17,26 +17,26 @@ module Tools
 
     private
 
-    def divide_by_10?
-      stripped = @str.delete(' ')
-      @stripped = stripped
-      puts "strip_str: #{stripped}"
-      reversed_strip = stripped.reverse
-      puts "reversed_strip: #{reversed_strip}"
-      reversed_array = reversed_strip.chars.map(&:to_i)
-      @reversed_array = reversed_array
-      puts "reversed_array: #{reversed_array}"
-      every_second_range = (1..reversed_array.length - 1).step(2)
-      every_second_array = every_second_range.map { |i| reversed_array[i] }
-      puts "every_second_array: #{every_second_array}"
-      every_first_range = (0..reversed_array.length - 1).step(2)
-      every_first = every_first_range.map { |i| reversed_array[i] }
-      puts every_first.sum
+    def reverse
+      @stripped.reverse
+    end
+
+    def every_sec_digit
+      every_second_range = (1..@stripped.length - 1).step(2)
+      every_second_range.map { |i| reverse[i].to_i }
+    end
+
+    def rest_of_digits
+      every_first_range = (0..@stripped.length - 1).step(2)
+      every_first_range.map { |i| reverse[i].to_i }
+    end
+
+    def checksum
       every_second = []
-      every_second_array.each do |num|
+      every_sec_digit.each do |num|
         num += num
         if num >= 10
-          num = num - 9
+          num -= 9
         else
           num
         end
@@ -46,7 +46,7 @@ module Tools
       every_second.each do |index|
         sum_index += index
       end
-      sum_index + every_first.sum
+      sum_index + rest_of_digits.sum
     end
   end
 
