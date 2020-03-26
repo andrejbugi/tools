@@ -1,6 +1,44 @@
 require "tools/version"
 
 module Tools
+
+  class Allergies
+
+    ALLERGENS = {
+      1 => 'eggs',
+      2 => 'peanuts',
+      4 => 'shellfish',
+      8 => 'strawberries',
+      16 => 'tomatoes',
+      32 => 'chocolate',
+      64 => 'pollen',
+      128 => 'cats'
+    }
+
+    def initialize(score)
+      @score = score
+    end
+
+    def allergic_to?(allergen)
+      # ALLERGENS[@score] == allergen
+      # input 3
+      # [128, ...,2, 1]
+      # get elements less then or equal to 3
+      # [2, 1]
+      # iteration 1: 3 - 2 -> 1   ALLERGENS[2] -> peanuts; :rest = 1
+      # iteration 2: 1 - 1 -> 0   ALLERGENS[1] -> eggs; :rest = 0
+      # each elements map to collection of allergens
+      # input 5
+      # [128, ...,2, 1]
+      # get elements less then or equal to 5
+      # [4, 2, 1]
+      # iteration 1: 5 - 4 -> 1   ALLERGENS[4] -> shellfish; :rest = 1
+      # iteration 2: 1 - 1 -> 0   ALLERGENS[1] -> eggs; :rest = 0
+      # each elements map to collection of allergens
+    end
+  end
+
+
   class Luhn
     def initialize(str)
       @str = str
