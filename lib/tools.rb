@@ -47,8 +47,6 @@ module Tools
     end
   end
 
-  public
-
   class Raindrop
     def initialize(int)
       @int = int
