@@ -1,4 +1,4 @@
-Rspec.describe Tools::Allergies do
+RSpec.describe Tools::Allergies do
 
   describe "determine whether or not they're allergic to a given item" do
     it 'matches the allergen with the score' do
