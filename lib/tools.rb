@@ -17,36 +17,32 @@ module Tools
 
     def initialize(score)
       @score = score
-      @list = []
-      @keys = []
     end
 
     def allergic_to?(allergen)
-      a = ALLERGENS.any?(@keys.each { |i| i })
-      a
+      score_allergens.include?(allergen)
     end
 
-    def keys_for_checking
-      ALLERGENS.each do |k, _v|
-        while k <= @score
-          @list << k
-        end
-      end
+    def score_allergens
+      allergens_key.map { |k| ALLERGENS[k] }
     end
 
-    def keys_final
-      @list.reverse.each do |num|
-        while @score > num
-          @keys << num
-          @score - num
-        end
-      end
+    private
+
+    def keys
+      ALLERGENS.keys.select { |k, _v| k <= score }.sort.reverse!
     end
 
-    # ALLERGENS.keys.inject { |a, b| a + b }
+    def allergens_key
+      scr = @score
+      keys.select { |key| scr >= key && scr -= key }
+    end
 
+    def score
+      @score -= 256 while @score >= 256
+      @score
+    end
   end
-
 
   class Luhn
     def initialize(str)
