@@ -1,6 +1,102 @@
 require "tools/version"
 
 module Tools
+  class Resistors
+    COLOR_BANDS = {
+      black: {
+        color: 0,
+        multiplier: 1,
+        tolerance: 20
+      },
+      brown: {
+        color: 1,
+        multiplier: 10,
+        tolerance: 1
+      },
+      red: {
+        color: 2,
+        multiplier: 100,
+        tolerance: 2
+      },
+      orange: {
+        color: 3,
+        multiplier: 1_000,
+        tolerance: 0.05
+      },
+      yellow: {
+        color: 4,
+        multiplier: 10_000,
+        tolerance: 0.02
+      },
+      green: {
+        color: 5,
+        multiplier: 100_000,
+        tolerance: 0.5
+      },
+      blue: {
+        color: 6,
+        multiplier: 1_000_000,
+        tolerance: 0.25
+      },
+      violet: {
+        color: 7,
+        multiplier: 10_000_000,
+        tolerance: 0.1
+      },
+      gray: {
+        color: 8,
+        multiplier: 100_000_000,
+        tolerance: 0.05
+      },
+      white: {
+        color: 9,
+        multiplier: 1_000_000_000,
+        tolerance: 10
+      },
+      gold: {
+        color: 0,
+        multiplier: 0.1,
+        tolerance: 5
+      },
+      silver: {
+        color: 0,
+        multiplier: 0.01,
+        tolerance: 10
+      }
+    }.freeze
+
+    attr_reader :color_1, :color_2
+
+    def initialize(colors)
+      @color_1, @color_2, @multiplier, @tolerance = colors
+    end
+
+    def specification
+      "#{base * multiplier} ohms +/-#{tolerance}%"
+    end
+
+    def output
+      (0..1).map { |elem| base[elem] }.join.to_i
+    end
+
+    private
+
+    def multiplier
+      COLOR_BANDS[@multiplier.downcase.to_sym][:multiplier]
+    end
+
+    def base
+      color(color_1) * 10 + color(color_2)
+    end
+
+    def color(color_key)
+      COLOR_BANDS[color_key.downcase.to_sym][:color]
+    end
+
+    def tolerance
+      @tolerance.nil? ? 20 : COLOR_BANDS[@tolerance.downcase.to_sym][:tolerance]
+    end
+  end
 
   class Allergies
 
