@@ -1,6 +1,34 @@
 require "tools/version"
 
 module Tools
+  class Armstrong
+    def initialize(number)
+      @number = number
+    end
+
+    def valid?
+      sum == number
+    end
+
+    private
+
+    def sum
+      digits.sum { |digit| digit**size}
+    end
+
+    def number
+      @number.abs
+    end
+
+    def digits
+      number.digits
+    end
+
+    def size
+      digits.size
+    end
+  end
+
   class Resistors
     COLOR_BANDS = {
       black: {
@@ -82,7 +110,7 @@ module Tools
     private
 
     def multiplier
-      COLOR_BANDS[@multiplier.downcase.to_sym][:multiplier]
+      COLOR_BANDS.fetch(@multiplier.downcase.to_sym)[:multiplier]
     end
 
     def base
@@ -90,11 +118,11 @@ module Tools
     end
 
     def color(color_key)
-      COLOR_BANDS[color_key.downcase.to_sym][:color]
+      COLOR_BANDS.fetch(color_key.downcase.to_sym)[:color]
     end
 
     def tolerance
-      @tolerance.nil? ? 20 : COLOR_BANDS[@tolerance.downcase.to_sym][:tolerance]
+      @tolerance.nil? ? 20 : COLOR_BANDS.fetch(@tolerance.downcase.to_sym)[:tolerance]
     end
   end
 
