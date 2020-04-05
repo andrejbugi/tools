@@ -240,4 +240,67 @@ module Tools
       end
     end
   end
+
+  class Grains
+    SQUARES_BOARD = 64
+
+    def self.square(index)
+      verify_number(index)
+      2**(index - 1)
+    end
+
+    def self.verify_number(index)
+      is_okey = index <= SQUARES_BOARD && index.is_a?(Integer) && index.positive?
+      raise ArgumentError unless is_okey
+    end
+
+    def self.total
+      (2**SQUARES_BOARD) - 1
+    end
+  end
+
+  class Antipodes
+    def initialize(input_array)
+      @input_array = input_array
+    end
+
+    def division_by_two
+      if @input_array.size > 1
+        checksum.map { |ind| ind / 2.0 }
+      else
+        @input_array
+      end
+    end
+
+    private
+
+    def split_array_in_two
+        checking_if_odd
+        @input_array.each_slice(middle).to_a
+    end
+
+    def checking_if_odd
+      @input_array.length.odd? ? middle_number : @input_array
+    end
+
+    def left
+      split_array_in_two.flatten.first(middle)
+    end
+
+    def reversed_right
+      split_array_in_two.flatten.last(middle).reverse!
+    end
+
+    def checksum
+      (left + reversed_right).each_slice(middle).to_a.transpose.map(&:sum)
+    end
+
+    def middle
+      @input_array.length / 2
+    end
+
+    def middle_number
+      @input_array.delete_at(middle)
+    end
+  end
 end
