@@ -275,8 +275,8 @@ module Tools
     private
 
     def split_array_in_two
-        checking_if_odd
-        @input_array.each_slice(middle).to_a
+      checking_if_odd
+      @input_array.each_slice(middle).to_a
     end
 
     def checking_if_odd
@@ -303,4 +303,6 @@ module Tools
       @input_array.delete_at(middle)
     end
   end
+
+  
 end
