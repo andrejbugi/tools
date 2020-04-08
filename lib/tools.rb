@@ -304,5 +304,46 @@ module Tools
     end
   end
 
-  
+  class QueenAttack
+    def initialize(wht_pos = [], blk_pos = [])
+      @white_position = wht_pos
+      @black_position = blk_pos
+    end
+
+    def attack_each_other?
+      return true if column || row || diagonal
+
+      false
+    end
+
+    private
+
+    def check
+      return true if white_pos == true && black_pos == true
+
+    end
+
+    def white_pos
+      raise ArgumentError unless @white_position.all? { |i| i >= 0 && i < 8 }
+    end
+
+    def black_pos
+      raise ArgumentError unless @black_position.all? { |i| i >= 0 && i < 8 }
+    end
+
+    def column
+      check
+      return true if @white_position[0] == @black_position[0]
+    end
+
+    def row
+      check
+      return true if @white_position[1] == @black_position[1]
+    end
+
+    def diagonal
+      check
+      true if (@black_position[0] - @white_position[0]).abs == (@black_position[1] - @white_position[1]).abs
+    end
+  end
 end
