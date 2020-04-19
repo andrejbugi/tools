@@ -456,4 +456,81 @@ module Tools
       x
     end
   end
+
+  class PokemonDamage
+    def initialize(type_element, type_2_element, attack, defense)
+      @attack = attack
+      @defense = defense
+      @el_1 = type_element
+      @el_2 = type_2_element
+    end
+
+    def damage
+      50 * (effectiveness / @defense)
+    end
+
+    def effectiveness
+      check
+    end
+
+    private
+
+    def check
+      if @el_1 == 'fire'
+        fire_dmg
+      elsif @el_1 == 'water'
+        water_dmg
+      elsif @el_1 == 'grass'
+        grass_dmg
+      else
+        electricity_dmg
+      end
+    end
+
+    def fire_dmg
+      if @el_1 == 'fire'
+        if @el_2 == 'grass'
+          @attack * 2
+        elsif @el_2 == 'water'
+          @attack * 0.5
+        else
+          @attack * 1
+        end
+      end
+    end
+
+    def water_dmg
+      if @el_1 == 'water'
+        if @el_2 == 'fire'
+          @attack * 2
+        elsif @el_2 == 'grass'
+          @attack * 0.5
+        elsif @el_2 == 'electric'
+          @attack * 0.5
+        end
+      end
+    end
+
+    def grass_dmg
+      if @el_1 == 'grass'
+        if @el_2 == 'water'
+          @attack * 2
+        elsif @el_2 == 'fire'
+          @attack * 0.5
+        else
+          @attack * 1
+        end
+      end
+    end
+
+    def electricity_dmg
+      if @el_1 == 'electric'
+        if @el_2 == 'water'
+          @attack * 2
+        else
+          @attack * 1
+        end
+      end
+    end
+  end
 end
