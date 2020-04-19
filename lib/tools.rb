@@ -348,22 +348,23 @@ module Tools
   end
 
   class ChocolateDilemma
-    def initialize(first_chocolates, second_chocolates)
-      @first_bars = first_chocolates
-      @second_bars = second_chocolates
+    def initialize(first_area, second_area)
+      @first_area = first_area
+      @second_area = second_area
     end
 
     def fairness?
+      first_person == second_person
     end
 
+    private
 
-    # private
-
-    def result
-      @first_bars[0][0] * @first_bars[0][1]
+    def first_person
+      @first_area.map! { |i| i[0] * i[1] }.sum
     end
 
-    def choc_bars
+    def second_person
+      @second_area.map! { |i| i[0] * i[1] }.sum
     end
   end
 
@@ -454,6 +455,5 @@ module Tools
       x -= 24 while x >= 24
       x
     end
-
   end
 end
