@@ -346,4 +346,114 @@ module Tools
       true if (@black_position[0] - @white_position[0]).abs == (@black_position[1] - @white_position[1]).abs
     end
   end
+
+  class ChocolateDilemma
+    def initialize(first_chocolates, second_chocolates)
+      @first_bars = first_chocolates
+      @second_bars = second_chocolates
+    end
+
+    def fairness?
+    end
+
+
+    # private
+
+    def result
+      @first_bars[0][0] * @first_bars[0][1]
+    end
+
+    def choc_bars
+    end
+  end
+
+  class OddNumber
+    def initialize(input_array)
+      @input_array = input_array
+    end
+
+    def first_odd_integer
+      first_odd
+    end
+
+    def all_odd_integers
+      odd_integers
+    end
+
+    private
+
+    # Grouping arrays into hash where key is the number
+    # and value is the times he is contained in the array
+    def group_by_appeareance
+      @input_array.group_by(&:itself)
+    end
+
+    # Returns first integer that appears odd number of times
+    def first_odd
+      group_by_appeareance.map do |k,v|
+        return k if v.length.odd?
+      end
+    end
+
+    # Returns all integers that appear odd number of times
+    def odd_integers
+      odds_array = []
+      group_by_appeareance.map do |k,v|
+        if v.length.odd?
+          odds_array << k
+        end
+      end
+      odds_array
+    end
+  end
+
+  class AdjustTheTime
+    def initialize(given_time, hour, min, sec)
+      @current_hr, @current_min, @current_sec = given_time.split(':').map(&:to_i)
+      @hour = hour
+      @min = min
+      @sec = sec
+    end
+
+    def adjusted
+      time
+      x = format('%02d', hour)
+      y = format('%02d', minutes)
+      z = format('%02d', seconds)
+      [x.to_s, y.to_s, z.to_s].join(':')
+    end
+
+    private
+
+    def time
+      hour
+      minutes
+      seconds
+    end
+
+    def seconds
+      x = @current_sec + @sec
+      while x >= 60
+        @min += 1
+        x -= 60
+      end
+      x
+    end
+
+    def minutes
+      x = @current_min + @min
+      while x >= 60
+        @hour += 1
+        x -= 60
+      end
+      x
+    end
+
+    def hour
+      x = @current_hr + @hour
+      x -= 24 while x >= 24
+      x
+    end
+
+  end
 end
