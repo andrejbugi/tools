@@ -543,8 +543,7 @@ module Tools
       'M' => 1000
     }.freeze
 
-    def initialize(num)
-      @num = num
+    def initialize
     end
 
     def convert_to_roman(num)
